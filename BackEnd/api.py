@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
@@ -21,3 +22,6 @@ def get_response(message):
     )
 
     return chat_completion.choices[0].message.content
+=======
+import 
+>>>>>>> 8a65219 (add: create BackEnd package)
