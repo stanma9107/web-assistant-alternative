@@ -1,21 +1,11 @@
-from openai import OpenAI
-from dotenv import load_dotenv
+import openai
+import os
+from dotenv import dotenv_values
 
-load_dotenv()
+config = dotenv_values(".env")
+openai.api_key = config['OPENAI_API_KEY']
 
-OPENAI_API_KEY=os.environ.get("OPENAI_API_KEY")
-
-client = OpenAI(
-    # defaults to os.environ.get("OPENAI_API_KEY")
-    api_key=OPENAI_API_KEY,
-)
-
-chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": "Say this is a test",
-        }
-    ],
+response = openai.Completion.create(
     model="gpt-3.5-turbo",
+    prompt="To solve x^2 = cos(0) + i*sin(0)"
 )
