@@ -1,11 +1,22 @@
-import openai
-import os
-from dotenv import dotenv_values
+from openai import OpenAI
+import json
+client = OpenAI()
 
-config = dotenv_values(".env")
-openai.api_key = config['OPENAI_API_KEY']
+json_obj = ""
+def get_response(message):
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo-1106",
+        response_format={"type":"json_object"},
+        temperature=0.7,
+        messages=[{"role":"system", "content":"You are a helpful assistant that extracts data and returns it in JSON format. Need to format as \"input\": qustion, \"result\": answer "},
+                  {"role":"user","content":message}],
+        max_tokens=256
+    )
+    return response.choices[0].message.content
 
-response = openai.Completion.create(
-    model="gpt-3.5-turbo",
-    prompt="To solve x^2 = cos(0) + i*sin(0)"
-)
+message = input()
+response = get_response(message)
+
+json_obj = json.loads(response)
+
+print(json_obj)
