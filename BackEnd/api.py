@@ -10,7 +10,7 @@ def get_response(message):
         temperature=0.7,
         messages=[{"role":"system", "content":"You are a helpful assistant that extracts data and returns it in JSON format. Need to format as \"input\": qustion, \"result\": answer "},
                   {"role":"user","content":message}],
-        max_tokens=256
+        max_tokens=100
     )
     return response.choices[0].message.content
 
