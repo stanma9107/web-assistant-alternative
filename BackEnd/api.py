@@ -14,5 +14,3 @@ def lambda_handler(event, context):
     )
     json_obj = json.loads(response.choices[0].message.content)
     return json_obj
-
-print(lambda_handler({'message':'1+1?','meta':True},{}))
