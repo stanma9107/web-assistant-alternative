@@ -31,7 +31,7 @@ jobs:
           output: './frontend/test.app.bom.xml'
 
       - name: Upload results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: vulnerabilities
-          path: vulnerabilities
+          path: ./frontend/test.app.bom.xml
