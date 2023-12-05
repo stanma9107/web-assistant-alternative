@@ -27,3 +27,8 @@ jobs:
           path: './frontend/'
           output: './frontend/sbom.xml'
           
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v3
+        with:
+         name: SBOM
+         path: './frontend/sbom.xml'
