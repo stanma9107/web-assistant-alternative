@@ -1,14 +1,15 @@
+on:
+push:
+  branches:
+    - feat/SBOM_js
+
 - name: Create SBOM step
   uses: CycloneDX/gh-node-module-generatebom@v1
   with:
     path: './frontend/'
     output: './bom_directory/test.app.bom.xml'
   
-  name: Build javascript project
-  on:
-  push:
-    branches:
-      - feat/SBOM_js
+- name: Build javascript project
 jobs:
   build:
     runs-on: ubuntu-latest
