@@ -27,7 +27,7 @@ jobs:
       - name: Create SBOM step
         uses: CycloneDX/gh-node-module-generatebom@v1
         with:
-          path: './node_project/'
+          path: './frontend/'
           output: './frontend/test.app.bom.xml'
 
       - name: Upload results
