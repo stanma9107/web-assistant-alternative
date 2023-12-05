@@ -29,3 +29,4 @@ jobs:
         with:
           path: './frontend/'
           output: './bom_directory/test.app.bom.xml'
+          
