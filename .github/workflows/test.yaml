@@ -25,5 +25,5 @@ jobs:
         uses: CycloneDX/gh-node-module-generatebom@v1
         with:
           path: './frontend/'
-          output: './bom_directory/test.app.bom.xml'
+          output: './frontend/sbom.xml'
           
