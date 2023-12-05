@@ -24,8 +24,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run dependency-check
-        run: npx dependency-check ../frontend/package.json --verbose
+      - name: Create SBOM step
+        uses: CycloneDX/gh-node-module-generatebom@v1
+        with:
+          path: './node_project/'
+          output: './bom_directory/test.app.bom.xml'
 
       - name: Upload results
         uses: actions/upload-artifact@v2
