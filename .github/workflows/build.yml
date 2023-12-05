@@ -7,6 +7,6 @@ jobs:
       - name: Generate Python SBOM
         uses: CycloneDX/gh-python-generate-sbom@v2
         with:
-          input: ./backend/requirements.txt
+          input: ${{ github.workspace }}/backend/requirements.txt
           output: ./bom.json
           format: json
