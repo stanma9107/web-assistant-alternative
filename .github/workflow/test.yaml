@@ -1,31 +1,22 @@
-name: Check Licenses
-on:
-  push:
-    branches: [main]
-    # Run this action only if dependencies has changed
-    paths:
-      - 'yarn.lock'
-  pull_request:
-    paths:
-      - 'yarn.lock'
+- name: Create SBOM step
+  uses: CycloneDX/gh-node-module-generatebom@v1
+  with:
+    path: './frontend/'
+    output: './bom_directory/test.app.bom.xml'
+  
+  name: Build javascript project
+on: push
 jobs:
-  licenses:
-    name: Check licenses
+  build:
     runs-on: ubuntu-latest
-
+    name: Install and build javascript
     steps:
-      - uses: actions/checkout@v2
-
-      # Install only production dependencies
-      # if you don't care about licenses of devDependencies
-      # E.g. GPL license is allowed in devDependencies
-      - run: yarn --frozen-lockfile --production
-
-      # Use main branch or a specific version (e.g. @v0.2.0)
-      - uses: daynin/nodejs-license-checker@main
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          exclude-private-packages: true
-          allow-only:  |
-            MIT
-            BSD-3-Clause
-            ISC
+          node-version: '16'
+      - run: npm install
+      - name: Create SBOM with CycloneDX
+        uses: CycloneDX/gh-node-module-generatebom@v1
+        with: 
+          output: './test.app.bom.xml'
