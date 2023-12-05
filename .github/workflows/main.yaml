@@ -19,10 +19,10 @@ jobs:
       - name: Install Node.js and npm
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: cd frontend && npm install
 
       - name: Create SBOM step
         uses: CycloneDX/gh-node-module-generatebom@v1
