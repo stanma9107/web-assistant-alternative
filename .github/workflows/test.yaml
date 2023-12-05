@@ -17,6 +17,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+      
+      - name: cd
+        run: cd frontend
 
       - name: Install Dependencies
         run: npm install
