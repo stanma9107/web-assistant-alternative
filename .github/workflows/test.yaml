@@ -1,10 +1,7 @@
 name: Build and Create SBOM
 
-on:
-  push:
-    branches:
-      - feat/SBOM_js
-
+on: [push]
+    
 jobs:
   build:
     runs-on: ubuntu-latest
