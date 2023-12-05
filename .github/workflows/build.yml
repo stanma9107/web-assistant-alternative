@@ -4,9 +4,11 @@ jobs:
   create_sbom:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate Python SBOM
-        uses: CycloneDX/gh-python-generate-sbom@v2
+      - names: Setup Python
+        uses: actions/setup-python@v2
         with:
-          input: ${{ github.workspace }}/backend/requirements.txt
-          output: ./bom.json
-          format: json
+          python-version: 3.8
+      - names: Install CycloneDX
+        run: pip install cyclonedx-bom
+      - name: Generate Python SBOM
+        run: cyclonedx-py -r -i ./backend/requirements.txt -o ./sbom.xml
