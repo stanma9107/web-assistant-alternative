@@ -14,3 +14,9 @@ jobs:
         run: pip install cyclonedx-bom
       - name: Create SBOM
         run: cyclonedx-py -r -i ./BackEnd/requirements.txt --format json -o ./BackEnd/sbom.json
+      - name: Upload SBOM to artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SBOM
+          path: ./BackEnd/sbom.json
+        
