@@ -21,6 +21,7 @@
     "@vue/cli-service": "~5.0.0",
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.0.4",
+    "dependency-check": "^4.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "msw": "^2.0.9",
