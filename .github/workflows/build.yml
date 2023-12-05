@@ -4,6 +4,8 @@ jobs:
   create_sbom:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup Python
         uses: actions/setup-python@v2.2.1
         with:
@@ -15,6 +17,8 @@ jobs:
           
       - name: Generate Python SBOM
         uses: CycloneDX/gh-python-generate-sbom@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
           input: /BackEnd/requirements.txt
           output: ./bom.json
