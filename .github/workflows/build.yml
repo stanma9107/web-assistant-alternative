@@ -1,0 +1,13 @@
+on: [push]
+
+jobs:   
+  create_sbom:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Generate Python SBOM
+        uses: CycloneDX/gh-python-generate-sbom@v2
+        with:
+          input: ./BackEnd/requirements.txt
+          output: ./bom.json
+          format: json
