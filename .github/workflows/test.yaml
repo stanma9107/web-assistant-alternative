@@ -17,12 +17,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-      
-      - name: cd
-        run: cd frontend
 
       - name: Install Dependencies
-        run: npm install
+        run: cd frontend && npm install
 
       - name: Create SBOM with CycloneDX
         uses: CycloneDX/gh-node-module-generatebom@v1
