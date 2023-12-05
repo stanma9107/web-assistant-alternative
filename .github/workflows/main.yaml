@@ -28,7 +28,7 @@ jobs:
         uses: CycloneDX/gh-node-module-generatebom@v1
         with:
           path: './node_project/'
-          output: './test.app.bom.xml'
+          output: './frontend/test.app.bom.xml'
 
       - name: Upload results
         uses: actions/upload-artifact@v2
