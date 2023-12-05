@@ -11,7 +11,7 @@ jobs:
     name: depecheck_test
     steps:
       - name: Checkoutcode
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
       
       - name: Create vulnerabilities directory
         run: mkdir vulnerabilities
