@@ -7,19 +7,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Python
-        uses: actions/setup-python@v2.2.1
-        with:
-          python-version: 3.9   
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r ./BackEnd/requirements.txt
-          
-      - name: Generate Python SBOM
-        uses: CycloneDX/gh-python-generate-sbom@v2
-      - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          input: /BackEnd/requirements.txt
-          output: ./bom.json
-          format: json
+          python-version: 3.9
+      - name: Install Cyclonedx-Bom
+        run: pip install cyclonedx-bom
+      - name: Create SBOM
+        run: cyclonedx-py -r -i ./BackEnd/requirements.txt --format json -o ./BackEnd/sbom.json
