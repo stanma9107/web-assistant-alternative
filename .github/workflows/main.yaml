@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Run dependency-check
-        run: npx dependency-check ./frontend/package.json --verbose
+        run: npx dependency-check ../frontend/package.json --verbose
 
       - name: Upload results
         uses: actions/upload-artifact@v2
