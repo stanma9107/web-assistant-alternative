@@ -5,7 +5,10 @@
     output: './bom_directory/test.app.bom.xml'
   
   name: Build javascript project
-on: push
+  on:
+  push:
+    branches:
+      - feat/SBOM_js
 jobs:
   build:
     runs-on: ubuntu-latest
