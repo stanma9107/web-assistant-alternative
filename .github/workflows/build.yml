@@ -4,6 +4,10 @@ jobs:
   create_sbom:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.1
+        with:
+          python-version: 3.9   
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
