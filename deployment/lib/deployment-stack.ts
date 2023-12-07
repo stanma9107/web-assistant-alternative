@@ -29,5 +29,10 @@ export class DeploymentStack extends cdk.Stack {
       sources: [s3deploy.Source.asset('../frontend/dist')],
       destinationBucket: bucket,
     });
+
+    // Output the url of the website
+    new cdk.CfnOutput(this, 'WebsiteURL', {
+      value: bucket.bucketWebsiteUrl,
+    });
   }
 }
