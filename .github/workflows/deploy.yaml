@@ -32,3 +32,4 @@ jobs:
         with:
           cdk_subcommand: 'deploy'
           cdk_args: '--require-approval never'
+          working_dir: 'deployment'
