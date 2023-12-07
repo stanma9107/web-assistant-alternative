@@ -1,0 +1,45 @@
+---
+openapi: 3.0.0
+info:
+  title: Swagger open ai chat service intergration
+  description: The API for the open ai chat service intergration
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /chat:
+    post:
+      tags:
+      - chat
+      summary: User sends text to chat with openAI
+      description: User sends text to chat with openAI
+      operationId: addchat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/chatMessagePayload'
+      responses:
+        "200":
+          description: successfully sended messages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/chatResponsePayload'
+components:
+  schemas:
+    chatMessagePayload:
+      type: object
+      properties:
+        message:
+          type: string
+          example: hello🐯!
+        meta:
+          type: boolean
+          description: Toggle switch for the new feature
+    chatResponsePayload:
+      type: object
+      properties:
+        response:
+          type: string
+          example: hello! What do you want to ask?
