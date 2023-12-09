@@ -27,7 +27,13 @@ export class DeploymentStack extends cdk.Stack {
     
     // Create API Gateway Lambda Integration
     const chatRoute =  api.root.addResource('chat')
-    chatRoute.addMethod('POST', new apigw.LambdaIntegration(lambdaFunction))
+    chatRoute.addMethod('POST', new apigw.LambdaIntegration(lambdaFunction), {
+      methodResponses: [
+        {
+          statusCode: '200',
+        },
+      ]
+    })
 
     // Create S3 bucket
     const bucket = new s3.Bucket(this, 'web-assistant-alternative-ntust', {
