@@ -4,7 +4,6 @@ import json
 client = OpenAI()
 
 def lambda_handler(event, context):
-    body = json.loads(event['body'])
     if event["httpMethod"] == "OPTIONS":
         return {
             "isBase64Encoded": True,
@@ -17,6 +16,7 @@ def lambda_handler(event, context):
             },
             "body": json.dumps({"message": "OPTIONS Success"})
         }
+    body = json.loads(event['body'])
     response = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
         response_format={"type":"json_object"},
