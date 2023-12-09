@@ -19,5 +19,5 @@ def lambda_handler(event, context):
         "isBase64Encoded": True,
         "statusCode": 200,
         "headers": { "Content-type": "Application/json" },
-        "body": json.loads(response.choices[0].message.content)
+        "body": response.choices[0].message.content
     }
