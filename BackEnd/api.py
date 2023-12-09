@@ -30,6 +30,9 @@ def lambda_handler(event, context):
     return {
         "isBase64Encoded": True,
         "statusCode": 200,
-        "headers": { "Content-type": "Application/json" },
+        "headers": { 
+            "Content-type": "Application/json", 
+            "Access-Control-Allow-Origin": "*",
+        },
         "body": response.choices[0].message.content
     }
