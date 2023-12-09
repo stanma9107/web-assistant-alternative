@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import * as s3 from 'aws-cdk-lib/aws-s3'
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment'
 import * as _lambda from 'aws-cdk-lib/aws-lambda'
+import * as apigw from 'aws-cdk-lib/aws-apigateway'
 
 export class DeploymentStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -14,8 +15,19 @@ export class DeploymentStack extends cdk.Stack {
       code: _lambda.DockerImageCode.fromImageAsset('../BackEnd'),
       environment: {
         "OPENAI_API_KEY": process.env.OPENAI_API_KEY || "",
-      }
+      },
+      timeout: cdk.Duration.seconds(30),
     })
+
+    // Create API Gateway
+    const api = new apigw.RestApi(this, 'open-ai-api', {
+      restApiName: 'open-ai-api',
+      description: 'This is a sample API Gateway'
+    })
+    
+    // Create API Gateway Lambda Integration
+    const chatRoute =  api.root.addResource('chat')
+    chatRoute.addMethod('POST', new apigw.LambdaIntegration(lambdaFunction))
 
     // Create S3 bucket
     const bucket = new s3.Bucket(this, 'web-assistant-alternative-ntust', {
@@ -42,6 +54,11 @@ export class DeploymentStack extends cdk.Stack {
     // Output the url of the website
     new cdk.CfnOutput(this, 'WebsiteURL', {
       value: bucket.bucketWebsiteUrl,
+    });
+
+    // Output the url of the api
+    new cdk.CfnOutput(this, 'APIURL', {
+      value: api.url,
     });
   }
 }
