@@ -35,6 +35,15 @@ export class DeploymentStack extends cdk.Stack {
       ]
     })
 
+    // Create API Gateway - OPTIONS
+    chatRoute.addMethod("OPTIONS", new apigw.LambdaIntegration(lambdaFunction), {
+      methodResponses: [
+        {
+          statusCode: '200',
+        },
+      ],
+    });
+
     // Create S3 bucket
     const bucket = new s3.Bucket(this, 'web-assistant-alternative-ntust', {
       websiteIndexDocument: 'index.html',
