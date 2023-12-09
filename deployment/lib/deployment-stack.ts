@@ -2,11 +2,20 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as s3 from 'aws-cdk-lib/aws-s3'
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment'
-import * as iam from 'aws-cdk-lib/aws-iam'
+import * as _lambda from 'aws-cdk-lib/aws-lambda'
 
 export class DeploymentStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+
+    // Create Lambda Container Function
+    const lambdaFunction = new _lambda.DockerImageFunction(this, 'open-ai-function', {
+      functionName: "open-ai-function",
+      code: _lambda.DockerImageCode.fromImageAsset('../BackEnd'),
+      environment: {
+        "OPENAI_API_KEY": process.env.OPENAI_API_KEY || "",
+      }
+    })
 
     // Create S3 bucket
     const bucket = new s3.Bucket(this, 'web-assistant-alternative-ntust', {
