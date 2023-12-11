@@ -12,9 +12,24 @@ export class DeploymentStack extends cdk.Stack {
     // Create Lambda Container Function
     const lambdaFunction = new _lambda.DockerImageFunction(this, 'open-ai-function', {
       functionName: "open-ai-function",
-      code: _lambda.DockerImageCode.fromImageAsset('../BackEnd'),
+      code: _lambda.DockerImageCode.fromImageAsset('../BackEnd', {
+        cmd: ["api.lambda_handler"],
+      }),
       environment: {
         "OPENAI_API_KEY": process.env.OPENAI_API_KEY || "",
+      },
+      timeout: cdk.Duration.seconds(30),
+    })
+
+    const ibmFunction = new _lambda.DockerImageFunction(this, 'ibm-function', {
+      functionName: "open-ai-function",
+      code: _lambda.DockerImageCode.fromImageAsset('../BackEnd', {
+        cmd: ["ibm.lambda_handler"],
+      }),
+      environment: {
+        "IBM_API_KEY": process.env.IBM_API_KEY || "",
+        "IBM_API_URL": process.env.IBM_API_URL || "",
+        "IBM_ENVIRONMENT_ID": process.env.IBM_ENVIRONMENT_ID || "",
       },
       timeout: cdk.Duration.seconds(30),
     })
@@ -37,6 +52,24 @@ export class DeploymentStack extends cdk.Stack {
 
     // Create API Gateway - OPTIONS
     chatRoute.addMethod("OPTIONS", new apigw.LambdaIntegration(lambdaFunction), {
+      methodResponses: [
+        {
+          statusCode: '200',
+        },
+      ],
+    });
+
+    const ibmRoute =  api.root.addResource('ibm')
+    ibmRoute.addMethod('POST', new apigw.LambdaIntegration(ibmFunction), {
+      methodResponses: [
+        {
+          statusCode: '200',
+        },
+      ]
+    })
+
+    // Create API Gateway - OPTIONS
+    ibmRoute.addMethod("OPTIONS", new apigw.LambdaIntegration(ibmFunction), {
       methodResponses: [
         {
           statusCode: '200',
