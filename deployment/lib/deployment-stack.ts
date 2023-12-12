@@ -22,7 +22,7 @@ export class DeploymentStack extends cdk.Stack {
     })
 
     const ibmFunction = new _lambda.DockerImageFunction(this, 'ibm-function', {
-      functionName: "open-ai-function",
+      functionName: "ibm-ai-function",
       code: _lambda.DockerImageCode.fromImageAsset('../BackEnd', {
         cmd: ["ibm.lambda_handler"],
       }),
