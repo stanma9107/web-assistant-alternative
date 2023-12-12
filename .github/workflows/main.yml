@@ -1,0 +1,33 @@
+name: Generate Python SBOM
+
+on:
+  push
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        cd BackEnd && pip install -r requirements.txt
+
+    - name: Generate CycloneDX SBOM
+      run: |
+        pip install cyclonedx-bom
+        cyclonedx-py -r -i ./BackEnd/requirements.txt --format json -o bom.json
+
+    - name: Upload SBOM artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: cyclonedx-sbom
+        path: bom.json
