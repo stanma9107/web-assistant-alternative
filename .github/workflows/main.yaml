@@ -1,0 +1,37 @@
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - 'feat/**'
+
+jobs:
+  depchecktest:
+    runs-on: ubuntu-latest
+    name: depecheck_test
+    steps:
+      - name: Checkoutcode
+        uses: actions/checkout@v4
+      
+      - name: Create vulnerabilities directory
+        run: mkdir vulnerabilities
+      
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: cd frontend && npm install
+
+      - name: Create SBOM step
+        uses: CycloneDX/gh-node-module-generatebom@v1
+        with:
+          path: './frontend/'
+          output: './frontend/test.app.bom.xml'
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: vulnerabilities
+          path: ./frontend/test.app.bom.xml
