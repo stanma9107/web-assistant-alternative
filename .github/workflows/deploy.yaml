@@ -46,3 +46,6 @@ jobs:
           working_dir: 'deployment'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          IBM_API_KEY: ${{ secrets.IBM_API_KEY }}
+          IBM_API_URL: ${{ secrets.IBM_API_URL }}
+          IBM_ENVIRONMENT_ID: ${{ secrets.IBM_ENVIRONMENT_ID }}
